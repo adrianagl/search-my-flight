@@ -5,8 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.flight.search.model.AirportCombination;
 import com.flight.search.model.Flight;
 
 public class FlightCsvReader {
@@ -19,11 +22,11 @@ public class FlightCsvReader {
         this.csvFilePath = csvFilePath;
     }
 
-    public List<Flight> run() {
-        List<Flight> flights = new ArrayList<>();
+    public Map<AirportCombination, List<Flight>> run() {
+        Map<AirportCombination, List<Flight>> flights = new HashMap<>();
+
         BufferedReader br = null;
         String line = "";
-
         try {
             br = new BufferedReader(new FileReader(csvFilePath));
 
@@ -31,7 +34,9 @@ public class FlightCsvReader {
 
             while((line = br.readLine()) != null) {
                 String[] flight = line.split(COMMA);
-                flights.add(Flight.build(flight));
+
+                Flight builtFlight = Flight.build(flight);
+                addFlight(flights, builtFlight);
             }
         } catch (FileNotFoundException exc) {
             throw new RuntimeException("The file was not found", exc);
@@ -48,5 +53,17 @@ public class FlightCsvReader {
         }
 
         return flights;
+    }
+
+    private void addFlight(Map<AirportCombination, List<Flight>> flights, Flight newFlight) {
+        AirportCombination combination = newFlight.getAirportCombination();
+
+        if(flights.containsKey(combination)) {
+            flights.get(combination).add(newFlight);
+        } else {
+            List<Flight> newFlights = new ArrayList<>();
+            newFlights.add(newFlight);
+            flights.put(combination, newFlights);
+        }
     }
 }

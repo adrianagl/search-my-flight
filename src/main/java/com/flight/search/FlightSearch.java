@@ -2,14 +2,16 @@ package com.flight.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.flight.search.model.AirportCombination;
 import com.flight.search.model.Flight;
 
 public class FlightSearch {
 
-    private List<Flight> availableFlights;
+    private Map<AirportCombination, List<Flight>> availableFlights;
 
-    public FlightSearch(List<Flight> availableFlights) {
+    public FlightSearch(Map<AirportCombination, List<Flight>> availableFlights) {
         this.availableFlights = availableFlights;
     }
 
@@ -17,21 +19,14 @@ public class FlightSearch {
         criteria.validate();
 
         List<SearchResult> results = new ArrayList<>();
+        List<Flight> flightsForCombination = availableFlights.get(criteria.getAirportCombination());
 
-        for(Flight flight : availableFlights) {
-            if(criteria.getOrigin() == flight.getOrigin() && criteria.getDestination() == flight.getDestination()) {
+        if(flightsForCombination != null) {
+            for (Flight flight : flightsForCombination) {
                 results.add(new SearchResult());
             }
         }
 
         return results;
-    }
-
-    public List<Flight> getAvailableFlights() {
-        return availableFlights;
-    }
-
-    public void setAvailableFlights(List<Flight> availableFlights) {
-        this.availableFlights = availableFlights;
     }
 }

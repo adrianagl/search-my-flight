@@ -2,14 +2,12 @@ package com.flight.search.model;
 
 public class Flight {
 
-    private Airport origin;
-    private Airport destination;
+    private AirportCombination airportCombination;
     private String flightNumber;
     private float price;
 
     private Flight(Airport origin, Airport destination, String flightNumber, float price) {
-        this.origin = origin;
-        this.destination = destination;
+        this.airportCombination = new AirportCombination(origin, destination);
         this.flightNumber = flightNumber;
         this.price = price;
     }
@@ -18,20 +16,20 @@ public class Flight {
         return new Flight(Airport.valueOf(csvFlightLine[0]), Airport.valueOf(csvFlightLine[1]), csvFlightLine[2], Float.valueOf(csvFlightLine[3]));
     }
 
-    public Airport getOrigin() {
-        return origin;
+    public AirportCombination getAirportCombination() {
+        return airportCombination;
     }
 
-    public void setOrigin(Airport origin) {
-        this.origin = origin;
+    public void setAirportCombination(AirportCombination airportCombination) {
+        this.airportCombination = airportCombination;
+    }
+
+    public Airport getOrigin() {
+        return airportCombination.getOrigin();
     }
 
     public Airport getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Airport destination) {
-        this.destination = destination;
+        return airportCombination.getDestination();
     }
 
     public String getFlightNumber() {

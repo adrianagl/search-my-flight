@@ -3,32 +3,33 @@ package com.flight.search;
 import java.util.Date;
 
 import com.flight.search.model.Airport;
+import com.flight.search.model.AirportCombination;
 import com.flight.search.utils.DateUtils;
 
 public class SearchCriteria {
 
-    private Airport origin;
-    private Airport destination;
+    private AirportCombination airportCombination;
     private Date date;
     private int adults;
     private int children;
     private int infants;
 
     public SearchCriteria(Airport origin, Airport destination, Date date, int adults, int children, int infants) {
-        this.origin = origin;
-        this.destination = destination;
+        this.airportCombination = new AirportCombination(origin, destination);
         this.date = DateUtils.cleanDate(date);
         this.adults = adults;
         this.children = children;
         this.infants = infants;
     }
 
+
+
     public void validate() {
-        if(this.origin == null) {
+        if(this.getOrigin() == null) {
             throw new IllegalArgumentException("Origin airport must not be empty");
         }
 
-        if(this.destination == null) {
+        if(this.getDestination() == null) {
             throw new IllegalArgumentException("Destination airport must not be empty");
         }
 
@@ -50,20 +51,20 @@ public class SearchCriteria {
         return adults + children + infants;
     }
 
-    public Airport getOrigin() {
-        return origin;
+    public AirportCombination getAirportCombination() {
+        return airportCombination;
     }
 
-    public void setOrigin(Airport origin) {
-        this.origin = origin;
+    public void setAirportCombination(AirportCombination airportCombination) {
+        this.airportCombination = airportCombination;
+    }
+
+    public Airport getOrigin() {
+        return airportCombination.getOrigin();
     }
 
     public Airport getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Airport destination) {
-        this.destination = destination;
+        return airportCombination.getDestination();
     }
 
     public Date getDate() {
