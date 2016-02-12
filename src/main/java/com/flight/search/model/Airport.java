@@ -1,4 +1,4 @@
-package com.flight.model;
+package com.flight.search.model;
 
 public enum Airport {
     MAD ("Madrid"),

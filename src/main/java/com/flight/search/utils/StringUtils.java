@@ -1,4 +1,4 @@
-package com.flight.utils;
+package com.flight.search.utils;
 
 public class StringUtils {
 
