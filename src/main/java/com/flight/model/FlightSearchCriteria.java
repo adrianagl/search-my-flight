@@ -1,9 +1,8 @@
-package com.flight.search.model;
+package com.flight.model;
 
 import java.util.Date;
 
-import com.flight.exception.MandatoryValueException;
-import com.flight.exception.PassengersException;
+import com.flight.utils.DateUtils;
 import com.flight.utils.StringUtils;
 
 public class FlightSearchCriteria {
@@ -18,7 +17,7 @@ public class FlightSearchCriteria {
     public FlightSearchCriteria(String origin, String destination, Date date, int adults, int children, int infants) {
         this.origin = origin;
         this.destination = destination;
-        this.date = date;
+        this.date = DateUtils.cleanDate(date);
         this.adults = adults;
         this.children = children;
         this.infants = infants;
@@ -26,19 +25,24 @@ public class FlightSearchCriteria {
 
     public void validate() {
         if(StringUtils.isEmpty(this.origin)) {
-            throw new MandatoryValueException("Origin airport must be introduced");
+            throw new IllegalArgumentException("Origin airport must not be empty");
         }
 
-        if(StringUtils.isEmpty(destination)) {
-            throw new MandatoryValueException("Destination airport must be introduced");
+        if(StringUtils.isEmpty(this.destination)) {
+            throw new IllegalArgumentException("Destination airport must not be empty");
         }
 
-        if(date == null) {
-            throw new MandatoryValueException("Departure date must be introduced");
+        if(this.date == null) {
+            throw new IllegalArgumentException("Departure date must not be empty");
+        }
+
+        Date today = DateUtils.cleanDate(new Date());
+        if(this.date.before(today)) {
+            throw new IllegalArgumentException("Departure date must be today or after today");
         }
 
         if(getTotalPassengers() == 0) {
-            throw new PassengersException("Indicate at least one passenger");
+            throw new IllegalArgumentException("No passengers have been selected");
         }
     }
 

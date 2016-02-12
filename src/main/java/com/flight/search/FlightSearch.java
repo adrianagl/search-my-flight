@@ -1,6 +1,6 @@
 package com.flight.search;
 
-import com.flight.search.model.FlightSearchCriteria;
+import com.flight.model.FlightSearchCriteria;
 
 public class FlightSearch {
 
