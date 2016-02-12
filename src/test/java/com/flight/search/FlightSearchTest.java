@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import com.flight.model.FlightSearchCriteria;
 import com.flight.utils.DateUtils;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -24,19 +23,5 @@ public class FlightSearchTest
         FlightSearchCriteria criteria = mock(FlightSearchCriteria.class);
         flightSearch.run(criteria);
         verify(criteria).validate();
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void runWhenOriginNotFoundThenReturnException() {
-        FlightSearchCriteria criteria = new FlightSearchCriteria(INEXISTENT_AIRPORT, DESTINATION, TODAY, 1, 1, 1);
-        flightSearch.run(criteria);
-        fail("An exception was expected");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void runWhenDestinationNotFoundThenReturnException() {
-        FlightSearchCriteria criteria = new FlightSearchCriteria(ORIGIN, INEXISTENT_AIRPORT, TODAY, 1, 1, 1);
-        flightSearch.run(criteria);
-        fail("An exception was expected");
     }
 }

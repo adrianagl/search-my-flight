@@ -7,14 +7,14 @@ import com.flight.utils.StringUtils;
 
 public class FlightSearchCriteria {
 
-    private String origin;
-    private String destination;
+    private Airport origin;
+    private Airport destination;
     private Date date;
     private int adults;
     private int children;
     private int infants;
 
-    public FlightSearchCriteria(String origin, String destination, Date date, int adults, int children, int infants) {
+    public FlightSearchCriteria(Airport origin, Airport destination, Date date, int adults, int children, int infants) {
         this.origin = origin;
         this.destination = destination;
         this.date = DateUtils.cleanDate(date);
@@ -24,11 +24,11 @@ public class FlightSearchCriteria {
     }
 
     public void validate() {
-        if(StringUtils.isEmpty(this.origin)) {
+        if(this.origin == null) {
             throw new IllegalArgumentException("Origin airport must not be empty");
         }
 
-        if(StringUtils.isEmpty(this.destination)) {
+        if(this.destination == null) {
             throw new IllegalArgumentException("Destination airport must not be empty");
         }
 
@@ -50,19 +50,19 @@ public class FlightSearchCriteria {
         return adults + children + infants;
     }
 
-    public String getOrigin() {
+    public Airport getOrigin() {
         return origin;
     }
 
-    public void setOrigin(String origin) {
+    public void setOrigin(Airport origin) {
         this.origin = origin;
     }
 
-    public String getDestination() {
+    public Airport getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Airport destination) {
         this.destination = destination;
     }
 
