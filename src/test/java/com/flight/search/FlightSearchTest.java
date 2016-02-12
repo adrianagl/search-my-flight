@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.flight.search.model.Airport;
+import com.flight.search.model.Flight;
 import com.flight.search.utils.DateUtils;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -16,7 +17,7 @@ public class FlightSearchTest
 {
     private static final Date TODAY = DateUtils.cleanDate(new Date());
 
-    private FlightSearch flightSearch = new FlightSearch();
+    private FlightSearch flightSearch;
 
     @Before
     public void setup() {
