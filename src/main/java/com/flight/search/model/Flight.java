@@ -7,11 +7,15 @@ public class Flight {
     private String flightNumber;
     private float price;
 
-    public Flight(Airport origin, Airport destination, String flightNumber, float price) {
+    private Flight(Airport origin, Airport destination, String flightNumber, float price) {
         this.origin = origin;
         this.destination = destination;
         this.flightNumber = flightNumber;
         this.price = price;
+    }
+
+    public static Flight build(String[] csvFlightLine) {
+        return new Flight(Airport.valueOf(csvFlightLine[0]), Airport.valueOf(csvFlightLine[1]), csvFlightLine[2], Float.valueOf(csvFlightLine[3]));
     }
 
     public Airport getOrigin() {

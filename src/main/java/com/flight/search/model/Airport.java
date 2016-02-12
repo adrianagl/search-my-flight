@@ -2,6 +2,7 @@ package com.flight.search.model;
 
 public enum Airport {
     MAD ("Madrid"),
+    BCN ("Barcelona"),
     LHR ("London"),
     CDG ("Paris"),
     FRA ("Frakfurt"),

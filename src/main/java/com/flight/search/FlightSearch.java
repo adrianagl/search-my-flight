@@ -18,6 +18,12 @@ public class FlightSearch {
 
         List<SearchResult> results = new ArrayList<>();
 
+        for(Flight flight : availableFlights) {
+            if(criteria.getOrigin() == flight.getOrigin() && criteria.getDestination() == flight.getDestination()) {
+                results.add(new SearchResult());
+            }
+        }
+
         return results;
     }
 

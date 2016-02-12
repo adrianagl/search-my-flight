@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.flight.search.model.Airport;
 import com.flight.search.model.Flight;
 import com.flight.search.utils.DateUtils;
+import com.flight.search.utils.FlightCsvReader;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -41,6 +42,8 @@ public class FlightSearchTest
     }
 
     private List<Flight> loadFlightsFromCsv() {
-        return FlightCsvReader.run();
+        String csvFilePath = getClass().getClassLoader().getResource("complete_list_flights.csv").getFile();
+        FlightCsvReader reader = new FlightCsvReader(csvFilePath);
+        return reader.run();
     }
 }
