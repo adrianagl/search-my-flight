@@ -10,8 +10,6 @@ import static org.junit.Assert.fail;
 
 public class DateUtilsTest {
 
-    private static final Date TODAY = new Date();
-
     @Test(expected = IllegalArgumentException.class )
     public void addDaysWhenDateIsNullReturnException() {
         DateUtils.addDays(null, 1);
