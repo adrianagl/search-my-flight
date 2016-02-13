@@ -1,7 +1,7 @@
 package com.flight.search.utils;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
 
 import org.junit.Test;
 
@@ -18,38 +18,27 @@ public class DateUtilsTest {
 
     @Test
     public void addDaysWhenDateIsNotNullReturnNewDate() {
-        Date newDate = DateUtils.addDays(createMockedDate(), 1);
+        LocalDate originalDate = LocalDate.of(2000, Month.JANUARY, 31);
+        LocalDate newDate = DateUtils.addDays(originalDate, 1);
+        LocalDate expectedDate = LocalDate.of(2000, Month.FEBRUARY, 1);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(newDate);
-
-        assertEquals(2000, calendar.get(Calendar.YEAR));
-        assertEquals(Calendar.FEBRUARY, calendar.get(Calendar.MONTH));
-        assertEquals(1, calendar.get(Calendar.DATE));
+        assertEquals(expectedDate, newDate);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void cleanDateWhenDateIsNullThenReturnException() {
-        DateUtils.cleanDate(null);
+    public void daysBetweenWhenDateBeforeIsAfterDateAfterThenReturnException() {
+        LocalDate dateBefore = LocalDate.of(2000, Month.JANUARY, 15);
+        LocalDate dateAfter = LocalDate.of(2000, Month.JANUARY, 14);
+
+        DateUtils.daysBetween(dateBefore, dateAfter);
         fail("An exception was expected");
     }
 
     @Test
-    public void cleanDateWhenDateIsNotNullThenReturnCleanDate() {
-        Date cleanDate = DateUtils.cleanDate(createMockedDate());
+    public void daysBetween() {
+        LocalDate dateBefore = LocalDate.of(2000, Month.JANUARY, 15);
+        LocalDate dateAfter = LocalDate.of(2000, Month.FEBRUARY, 15);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(cleanDate);
-        assertEquals(2000, calendar.get(Calendar.YEAR));
-        assertEquals(Calendar.JANUARY, calendar.get(Calendar.MONTH));
-        assertEquals(31, calendar.get(Calendar.DATE));
-        assertEquals(0, calendar.get(Calendar.HOUR));
-        assertEquals(0, calendar.get(Calendar.MINUTE));
-    }
-
-    private Date createMockedDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2000, Calendar.JANUARY, 31, 1, 30);
-        return calendar.getTime();
+        assertEquals(31, DateUtils.daysBetween(dateBefore, dateAfter));
     }
 }

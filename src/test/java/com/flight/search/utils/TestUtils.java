@@ -36,7 +36,7 @@ public class TestUtils {
         List<String[]> lines = reader.run();
 
         for (String[] line : lines) {
-            airlines.put(line[0], new Airline(line[0], line[1], Double.valueOf(line[2])));
+            airlines.put(line[0], new Airline(line[0], line[1], Float.valueOf(line[2])));
         }
     }
 
@@ -46,7 +46,7 @@ public class TestUtils {
 
         for (String[] line : lines) {
             Route route = new Route(getAirportByCode(line[0]), getAirportByCode(line[1]));
-            Flight newFlight = new Flight(route, line[2], Double.valueOf(line[3]));
+            Flight newFlight = new Flight(route, line[2], Float.valueOf(line[3]));
 
             if (flights.containsKey(route)) {
                 flights.get(route).add(newFlight);

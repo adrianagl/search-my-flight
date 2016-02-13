@@ -3,9 +3,9 @@ package com.flight.search.view;
 public class FlightSearchResult {
 
     private String flightCode;
-    private double totalPrice;
+    private float totalPrice;
 
-    public FlightSearchResult(String flightCode, double totalPrice) {
+    public FlightSearchResult(String flightCode, float totalPrice) {
         this.flightCode = flightCode;
         this.totalPrice = totalPrice;
     }
@@ -18,11 +18,11 @@ public class FlightSearchResult {
         this.flightCode = flightCode;
     }
 
-    public double getTotalPrice() {
+    public float getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

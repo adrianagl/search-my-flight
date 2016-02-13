@@ -1,5 +1,6 @@
 package com.flight.search.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,34 @@ public class DefaultFlightService {
         criteria.validate();
 
         Route route = getRoute(criteria);
-
         List<FlightSearchResult> results = new ArrayList<>();
 
         List<Flight> flights = flightRepository.findByRoute(route);
+        for(Flight flight : flights) {
+            float totalPrice = calculateTotalPrice(flight, criteria);
+            FlightSearchResult result = new FlightSearchResult(flight.getFlightCode(), totalPrice);
+            results.add(result);
+        }
 
         return results;
+    }
+
+    private float calculateTotalPrice(Flight flight, FlightSearchCriteria criteria) {
+        int adults = criteria.getAdults();
+        int children = criteria.getChildren();
+        int infants = criteria.getInfants();
+        LocalDate searchDate = criteria.getDate();
+
+        float basePrice = flight.getBasePrice();
+
+        float total = 0;
+
+        //Adults
+        total += (adults * (flight.getPriceWithDateDiscount(searchDate)));
+
+
+
+        return total;
     }
 
     private Route getRoute(FlightSearchCriteria criteria) {

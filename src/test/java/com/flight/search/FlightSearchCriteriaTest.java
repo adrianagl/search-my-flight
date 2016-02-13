@@ -1,6 +1,7 @@
 package com.flight.search;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class FlightSearchCriteriaTest {
 
     private static final String ORIGIN = "CPH";
     private static final String DESTINATION = "FRA";
-    private static final Date TODAY = DateUtils.cleanDate(new Date());
+    private static final LocalDate TODAY = LocalDate.now();
 
     @Test(expected = IllegalArgumentException.class)
     public void validateWhenOriginIsNullThenReturnException() {
@@ -43,16 +44,16 @@ public class FlightSearchCriteriaTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void validateWhenDateIsNullThenReturnException() {
+    public void validateWhenLocalDateIsNullThenReturnException() {
         FlightSearchCriteria criteria = new FlightSearchCriteria(ORIGIN, DESTINATION, null, 1, 1, 1);
         criteria.validate();
         fail("An exception should have been thrown");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void validateWhenDateIsPastThenReturnException() {
-        Date pastDate = DateUtils.addDays(TODAY, -1);
-        FlightSearchCriteria criteria = new FlightSearchCriteria(ORIGIN, DESTINATION, pastDate, 1, 1, 1);
+    public void validateWhenLocalDateIsPastThenReturnException() {
+        LocalDate pastLocalDate = DateUtils.addDays(TODAY, -1);
+        FlightSearchCriteria criteria = new FlightSearchCriteria(ORIGIN, DESTINATION, pastLocalDate, 1, 1, 1);
         criteria.validate();
         fail("An exception should have been thrown");
     }

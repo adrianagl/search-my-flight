@@ -1,23 +1,23 @@
 package com.flight.search.view;
 
-import java.util.Date;
 
-import com.flight.search.utils.DateUtils;
+import java.time.LocalDate;
+
 import com.flight.search.utils.StringUtils;
 
 public class FlightSearchCriteria {
 
     private String originAirport;
     private String destinationAirport;
-    private Date date;
+    private LocalDate date;
     private int adults;
     private int children;
     private int infants;
 
-    public FlightSearchCriteria(String originAirport, String destinationAirport, Date date, int adults, int children, int infants) {
+    public FlightSearchCriteria(String originAirport, String destinationAirport, LocalDate date, int adults, int children, int infants) {
         this.originAirport = originAirport;
         this.destinationAirport = destinationAirport;
-        this.date = DateUtils.cleanDate(date);
+        this.date = date;
         this.adults = adults;
         this.children = children;
         this.infants = infants;
@@ -36,8 +36,8 @@ public class FlightSearchCriteria {
             throw new IllegalArgumentException("Departure date must not be empty");
         }
 
-        Date today = DateUtils.cleanDate(new Date());
-        if(this.date.before(today)) {
+        LocalDate today = LocalDate.now();
+        if(this.date.isBefore(today)) {
             throw new IllegalArgumentException("Departure date must be today or after today");
         }
 
@@ -66,11 +66,11 @@ public class FlightSearchCriteria {
         this.destinationAirport = destinationAirport;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -1,15 +1,21 @@
 package com.flight.search.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+
+import com.flight.search.utils.DateUtils;
+
 public class Flight {
 
     private Route route;
-    private String flightNumber;
-    private double price;
+    private String flightCode;
+    private float basePrice;
 
-    public Flight(Route route, String flightNumber, double price) {
+    public Flight(Route route, String flightCode, float basePrice) {
         this.route = route;
-        this.flightNumber = flightNumber;
-        this.price = price;
+        this.flightCode = flightCode;
+        this.basePrice = basePrice;
     }
 
     public Route getRoute() {
@@ -28,19 +34,39 @@ public class Flight {
         return route.getDestination();
     }
 
-    public String getFlightNumber() {
-        return flightNumber;
+    public String getFlightCode() {
+        return flightCode;
     }
 
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
+    public void setFlightCode(String flightCode) {
+        this.flightCode = flightCode;
     }
 
-    public double getPrice() {
-        return price;
+    public float getBasePrice() {
+        return basePrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setBasePrice(float basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public float getPriceWithDateDiscount(LocalDate searchDate) {
+        LocalDate today = LocalDate.now();
+        long daysUntil = DateUtils.daysBetween(today, searchDate);
+
+        float percent;
+        if(daysUntil > 30) {
+            percent = 0.8f;
+        } else if(30 >= daysUntil && daysUntil >= 16) {
+            percent = 1;
+        } else if(15 >= daysUntil && daysUntil >= 3) {
+            percent = 1.2f;
+        } else {
+            percent = 1.5f;
+        }
+        float discountPrice = basePrice * percent;
+        BigDecimal bd = new BigDecimal(discountPrice);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.floatValue();
     }
 }
