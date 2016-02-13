@@ -1,11 +1,11 @@
-package com.flight.search;
+package com.flight.search.view;
 
 import java.util.Date;
 
 import com.flight.search.utils.DateUtils;
 import com.flight.search.utils.StringUtils;
 
-public class SearchCriteria {
+public class FlightSearchCriteria {
 
     private String originAirport;
     private String destinationAirport;
@@ -14,7 +14,7 @@ public class SearchCriteria {
     private int children;
     private int infants;
 
-    public SearchCriteria(String originAirport, String destinationAirport, Date date, int adults, int children, int infants) {
+    public FlightSearchCriteria(String originAirport, String destinationAirport, Date date, int adults, int children, int infants) {
         this.originAirport = originAirport;
         this.destinationAirport = destinationAirport;
         this.date = DateUtils.cleanDate(date);

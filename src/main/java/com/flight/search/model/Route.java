@@ -14,12 +14,20 @@ public class Route {
         return origin;
     }
 
+    public String getOriginCode() {
+        return origin == null ? null : origin.getCode();
+    }
+
     public void setOrigin(Airport origin) {
         this.origin = origin;
     }
 
     public Airport getDestination() {
         return destination;
+    }
+
+    public String getDestinationCode() {
+        return destination == null ? null : destination.getCode();
     }
 
     public void setDestination(Airport destination) {

@@ -1,7 +1,6 @@
 package com.flight.search.utils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ public class TestUtils {
 
     private static Map<String, Airport> airports = new HashMap<>();
     private static Map<String, Airline> airlines = new HashMap<>();
-    private static List<Flight> flights = new ArrayList<>();
+    private static Map<Route, List<Flight>> flights = new HashMap<>();
 
     public static void setUpData() {
         loadAirlines();
@@ -48,23 +47,27 @@ public class TestUtils {
         for (String[] line : lines) {
             Route route = new Route(getAirportByCode(line[0]), getAirportByCode(line[1]));
             Flight newFlight = new Flight(route, line[2], Float.valueOf(line[3]));
-            flights.add(newFlight);
+
+            if (flights.containsKey(route)) {
+                flights.get(route).add(newFlight);
+            } else {
+                List<Flight> newFlights = new ArrayList<>();
+                newFlights.add(newFlight);
+                flights.put(route, newFlights);
+            }
         }
     }
 
-    private static Airport getAirportByCode(String code) {
+    public static Airport getAirportByCode(String code) {
         return airports.get(code);
     }
 
-    public static Collection<Airport> getAirports() {
-        return airports.values();
+    public static Route getRoute(String origin, String destination) {
+        return new Route(airports.get(origin), airports.get(destination));
     }
 
-    public static Collection<Airline> getAirlines() {
-        return airlines.values();
-    }
-
-    public static List<Flight> getFlights() {
-        return flights;
+    public static List<Flight> getFlightsByRoute(Route route) {
+        List<Flight> result = flights.get(route);
+        return result == null ? new ArrayList<Flight>() : result;
     }
 }
