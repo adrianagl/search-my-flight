@@ -25,4 +25,5 @@ public class FlightSearchTest
         flightSearch.run(criteria);
         verify(criteria).validate();
     }
+
 }

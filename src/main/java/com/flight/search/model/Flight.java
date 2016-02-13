@@ -6,8 +6,8 @@ public class Flight {
     private String flightNumber;
     private float price;
 
-    private Flight(Airport origin, Airport destination, String flightNumber, float price) {
-        this.route = new Route(origin, destination);
+    public Flight(Route route, String flightNumber, float price) {
+        this.route = route;
         this.flightNumber = flightNumber;
         this.price = price;
     }
