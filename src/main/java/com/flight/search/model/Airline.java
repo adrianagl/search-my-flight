@@ -4,9 +4,9 @@ public class Airline {
 
     private String code;
     private String name;
-    private float infantPrice;
+    private double infantPrice;
 
-    public Airline(String code, String name, float infantPrice) {
+    public Airline(String code, String name, double infantPrice) {
         this.code = code;
         this.name = name;
         this.infantPrice = infantPrice;
@@ -28,11 +28,11 @@ public class Airline {
         this.name = name;
     }
 
-    public float getInfantPrice() {
+    public double getInfantPrice() {
         return infantPrice;
     }
 
-    public void setInfantPrice(float infantPrice) {
+    public void setInfantPrice(double infantPrice) {
         this.infantPrice = infantPrice;
     }
 }

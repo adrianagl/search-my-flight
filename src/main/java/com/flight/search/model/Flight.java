@@ -4,9 +4,9 @@ public class Flight {
 
     private Route route;
     private String flightNumber;
-    private float price;
+    private double price;
 
-    public Flight(Route route, String flightNumber, float price) {
+    public Flight(Route route, String flightNumber, double price) {
         this.route = route;
         this.flightNumber = flightNumber;
         this.price = price;
@@ -36,11 +36,11 @@ public class Flight {
         this.flightNumber = flightNumber;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }
