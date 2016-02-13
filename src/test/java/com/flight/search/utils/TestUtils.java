@@ -1,6 +1,7 @@
 package com.flight.search.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,15 @@ public class TestUtils {
 
     private static Map<String, Airport> airports = new HashMap<>();
     private static Map<String, Airline> airlines = new HashMap<>();
-    private static Map<Route, List<Flight>> flights = new HashMap<>();
+    private static List<Flight> flights = new ArrayList<>();
 
-    public static void loadAirports() {
+    public static void setUpData() {
+        loadAirlines();
+        loadAirports();
+        loadFlights();
+    }
+
+    private static void loadAirports() {
         CsvReader reader = new CsvReader("src/test/resources/airports.csv");
         List<String[]> lines = reader.run();
 
@@ -25,7 +32,7 @@ public class TestUtils {
         }
     }
 
-    public static void loadAirlines() {
+    private static void loadAirlines() {
         CsvReader reader = new CsvReader("src/test/resources/airlines.csv");
         List<String[]> lines = reader.run();
 
@@ -34,25 +41,30 @@ public class TestUtils {
         }
     }
 
-    public static void loadFlights() {
+    private static void loadFlights() {
         CsvReader csvReader = new CsvReader("src/test/resources/flights.csv");
         List<String[]> lines = csvReader.run();
 
         for (String[] line : lines) {
             Route route = new Route(getAirportByCode(line[0]), getAirportByCode(line[1]));
             Flight newFlight = new Flight(route, line[2], Float.valueOf(line[3]));
-
-            if (flights.containsKey(route)) {
-                flights.get(route).add(newFlight);
-            } else {
-                List<Flight> newFlights = new ArrayList<>();
-                newFlights.add(newFlight);
-                flights.put(route, newFlights);
-            }
+            flights.add(newFlight);
         }
     }
 
     private static Airport getAirportByCode(String code) {
         return airports.get(code);
+    }
+
+    public static Collection<Airport> getAirports() {
+        return airports.values();
+    }
+
+    public static Collection<Airline> getAirlines() {
+        return airlines.values();
+    }
+
+    public static List<Flight> getFlights() {
+        return flights;
     }
 }
