@@ -1,11 +1,11 @@
 package com.flight.search.model;
 
-public class AirportCombination {
+public class Route {
 
     private Airport origin;
     private Airport destination;
 
-    public AirportCombination(Airport origin, Airport destination) {
+    public Route(Airport origin, Airport destination) {
         this.origin = origin;
         this.destination = destination;
     }
@@ -30,11 +30,11 @@ public class AirportCombination {
         if(o == null) {
             return false;
         }
-        if(!(o instanceof AirportCombination)) {
+        if(!(o instanceof Route)) {
             return false;
         }
 
-        AirportCombination other = (AirportCombination) o;
+        Route other = (Route) o;
         return this.origin == other.origin && this.destination == other.destination;
     }
 

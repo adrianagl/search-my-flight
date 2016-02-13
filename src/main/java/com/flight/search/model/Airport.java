@@ -1,19 +1,28 @@
 package com.flight.search.model;
 
-public enum Airport {
-    MAD ("Madrid"),
-    BCN ("Barcelona"),
-    LHR ("London"),
-    CDG ("Paris"),
-    FRA ("Frakfurt"),
-    IST ("Istanbul"),
-    AMS ("Amsterdam"),
-    FCO ("Rome"),
-    CPH ("Copenhagen");
+public class Airport {
 
-    private final String description;
+    private String code;
+    private String city;
 
-    private Airport(String description) {
-        this.description = description;
+    public Airport(String code, String city) {
+        this.code = code;
+        this.city = city;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

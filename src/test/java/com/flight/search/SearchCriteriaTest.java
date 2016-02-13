@@ -4,14 +4,13 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.flight.search.model.Airport;
 import com.flight.search.utils.DateUtils;
 import static org.junit.Assert.fail;
 
 public class SearchCriteriaTest {
 
-    private static final Airport ORIGIN = Airport.CPH;
-    private static final Airport DESTINATION = Airport.FRA;
+    private static final String ORIGIN = "CPH";
+    private static final String DESTINATION = "FRA";
     private static final Date TODAY = DateUtils.cleanDate(new Date());
 
     @Test(expected = IllegalArgumentException.class)
@@ -22,8 +21,22 @@ public class SearchCriteriaTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void validateWhenOriginIsEmptyThenReturnException() {
+        SearchCriteria criteria = new SearchCriteria("", DESTINATION, TODAY, 1, 1, 1);
+        criteria.validate();
+        fail("An exception should have been thrown");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void validateWhenDestinationIsNullThenReturnException() {
         SearchCriteria criteria = new SearchCriteria(ORIGIN, null, TODAY, 1, 1, 1);
+        criteria.validate();
+        fail("An exception should have been thrown");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void validateWhenDestinationIsEmptyThenReturnException() {
+        SearchCriteria criteria = new SearchCriteria(ORIGIN, "", TODAY, 1, 1, 1);
         criteria.validate();
         fail("An exception should have been thrown");
     }

@@ -2,34 +2,33 @@ package com.flight.search;
 
 import java.util.Date;
 
-import com.flight.search.model.Airport;
-import com.flight.search.model.AirportCombination;
 import com.flight.search.utils.DateUtils;
+import com.flight.search.utils.StringUtils;
 
 public class SearchCriteria {
 
-    private AirportCombination airportCombination;
+    private String originAirport;
+    private String destinationAirport;
     private Date date;
     private int adults;
     private int children;
     private int infants;
 
-    public SearchCriteria(Airport origin, Airport destination, Date date, int adults, int children, int infants) {
-        this.airportCombination = new AirportCombination(origin, destination);
+    public SearchCriteria(String originAirport, String destinationAirport, Date date, int adults, int children, int infants) {
+        this.originAirport = originAirport;
+        this.destinationAirport = destinationAirport;
         this.date = DateUtils.cleanDate(date);
         this.adults = adults;
         this.children = children;
         this.infants = infants;
     }
 
-
-
     public void validate() {
-        if(this.getOrigin() == null) {
+        if(StringUtils.isEmpty(this.getOriginAirport())) {
             throw new IllegalArgumentException("Origin airport must not be empty");
         }
 
-        if(this.getDestination() == null) {
+        if(StringUtils.isEmpty(this.getDestinationAirport())) {
             throw new IllegalArgumentException("Destination airport must not be empty");
         }
 
@@ -51,20 +50,20 @@ public class SearchCriteria {
         return adults + children + infants;
     }
 
-    public AirportCombination getAirportCombination() {
-        return airportCombination;
+    public String getOriginAirport() {
+        return originAirport;
     }
 
-    public void setAirportCombination(AirportCombination airportCombination) {
-        this.airportCombination = airportCombination;
+    public void setOriginAirport(String originAirport) {
+        this.originAirport = originAirport;
     }
 
-    public Airport getOrigin() {
-        return airportCombination.getOrigin();
+    public String getDestinationAirport() {
+        return destinationAirport;
     }
 
-    public Airport getDestination() {
-        return airportCombination.getDestination();
+    public void setDestinationAirport(String destinationAirport) {
+        this.destinationAirport = destinationAirport;
     }
 
     public Date getDate() {

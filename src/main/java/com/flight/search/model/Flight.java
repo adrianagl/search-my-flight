@@ -2,34 +2,30 @@ package com.flight.search.model;
 
 public class Flight {
 
-    private AirportCombination airportCombination;
+    private Route route;
     private String flightNumber;
     private float price;
 
     private Flight(Airport origin, Airport destination, String flightNumber, float price) {
-        this.airportCombination = new AirportCombination(origin, destination);
+        this.route = new Route(origin, destination);
         this.flightNumber = flightNumber;
         this.price = price;
     }
 
-    public static Flight build(String[] csvFlightLine) {
-        return new Flight(Airport.valueOf(csvFlightLine[0]), Airport.valueOf(csvFlightLine[1]), csvFlightLine[2], Float.valueOf(csvFlightLine[3]));
+    public Route getRoute() {
+        return route;
     }
 
-    public AirportCombination getAirportCombination() {
-        return airportCombination;
-    }
-
-    public void setAirportCombination(AirportCombination airportCombination) {
-        this.airportCombination = airportCombination;
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     public Airport getOrigin() {
-        return airportCombination.getOrigin();
+        return route.getOrigin();
     }
 
     public Airport getDestination() {
-        return airportCombination.getDestination();
+        return route.getDestination();
     }
 
     public String getFlightNumber() {
