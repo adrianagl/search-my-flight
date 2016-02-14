@@ -46,7 +46,12 @@ public class TestUtils {
 
         for (String[] line : lines) {
             Route route = new Route(getAirportByCode(line[0]), getAirportByCode(line[1]));
-            Flight newFlight = new Flight(route, line[2], Float.valueOf(line[3]));
+
+            String flightCode = line[2];
+            String airlineCode = flightCode.substring(0, 2);
+            Airline airline = getAirlineByCode(airlineCode);
+
+            Flight newFlight = new Flight(route, airline, flightCode, Float.valueOf(line[3]));
 
             if (flights.containsKey(route)) {
                 flights.get(route).add(newFlight);

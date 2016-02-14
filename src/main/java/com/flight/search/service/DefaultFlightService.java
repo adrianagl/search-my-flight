@@ -1,5 +1,7 @@
 package com.flight.search.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +9,17 @@ import java.util.List;
 import com.flight.search.model.Airport;
 import com.flight.search.model.Flight;
 import com.flight.search.model.Route;
+import com.flight.search.repository.AirlineRepository;
 import com.flight.search.repository.AirportRepository;
-import com.flight.search.view.FlightSearchCriteria;
 import com.flight.search.repository.FlightRepository;
+import com.flight.search.view.FlightSearchCriteria;
 import com.flight.search.view.FlightSearchResult;
 
 public class DefaultFlightService {
 
     private FlightRepository flightRepository;
     private AirportRepository airportRepository;
+    private AirlineRepository airlineRepository;
 
     public List<FlightSearchResult> search(FlightSearchCriteria criteria) {
         criteria.validate();
@@ -37,18 +41,32 @@ public class DefaultFlightService {
         int adults = criteria.getAdults();
         int children = criteria.getChildren();
         int infants = criteria.getInfants();
+        float infantPrice = flight.getAirlineInfantPrice();
         LocalDate searchDate = criteria.getDate();
 
         float basePrice = flight.getBasePrice();
+        float priceWithDateDiscount = flight.getPriceWithDateDiscount(searchDate);
 
         float total = 0;
 
         //Adults
-        total += (adults * (flight.getPriceWithDateDiscount(searchDate)));
+        total += adults * priceWithDateDiscount;
+
+        //Children
+        total += children * (0.67f * priceWithDateDiscount);
+
+        //Infants
+        total += infants * infantPrice;
 
 
 
-        return total;
+        return roundPrice(total);
+    }
+
+    private float roundPrice(float price) {
+        BigDecimal bd = new BigDecimal(price);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.floatValue();
     }
 
     private Route getRoute(FlightSearchCriteria criteria) {
@@ -71,5 +89,9 @@ public class DefaultFlightService {
 
     public void setAirportRepository(AirportRepository airportRepository) {
         this.airportRepository = airportRepository;
+    }
+
+    public void setAirlineRepository(AirlineRepository airlineRepository) {
+        this.airlineRepository = airlineRepository;
     }
 }

@@ -20,7 +20,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,6 +28,7 @@ public class DefaultFlightServiceTest
 {
     private static final LocalDate TODAY = LocalDate.now();
     private static final LocalDate DATE_IN_30_DAYS = DateUtils.addDays(TODAY, 31);
+    private static final LocalDate DATE_IN_15_DAYS = DateUtils.addDays(TODAY, 15);
 
     private FlightRepository flightRepository = mock(FlightRepository.class);
     private AirportRepository airportRepository = mock(AirportRepository.class);
@@ -42,6 +42,7 @@ public class DefaultFlightServiceTest
 
         service.setFlightRepository(flightRepository);
         service.setAirportRepository(airportRepository);
+        service.setAirlineRepository(airlineRepository);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -79,7 +80,20 @@ public class DefaultFlightServiceTest
 
         verify(airportRepository, times(2)).findByCode(anyString());
         verify(flightRepository).findByRoute(any(Route.class));
-        verify(airlineRepository, never()).findByCode(anyString());
+    }
+
+    @Test
+    public void search15DaysToDeparture2Adults1Child1Infant() {
+        FlightSearchCriteria criteria = buildCriteriaAndMockData("LHR", "IST", DATE_IN_15_DAYS, 2, 1, 1);
+
+        List<FlightSearchResult> result = service.search(criteria);
+
+        assertEquals(2, result.size());
+        validateResult(result.get(0), "TK8891", 806);
+        validateResult(result.get(1), "LH1085", 481.19f);
+
+        verify(airportRepository, times(2)).findByCode(anyString());
+        verify(flightRepository).findByRoute(any(Route.class));
     }
 
     private FlightSearchCriteria buildCriteriaAndMockData(String origin, String destination, LocalDate date, int adults, int children, int infants) {
@@ -100,10 +114,6 @@ public class DefaultFlightServiceTest
     private void mockAirportRepositoryResultsForRoute(Route route) {
         when(airportRepository.findByCode(route.getOriginCode())).thenReturn(TestUtils.getAirportByCode(route.getOriginCode()));
         when(airportRepository.findByCode(route.getDestinationCode())).thenReturn(TestUtils.getAirportByCode(route.getDestinationCode()));
-    }
-
-    private void mockAirlineRepositoryResultsForCode(String code) {
-        when(airlineRepository.findByCode(code)).thenReturn(TestUtils.getAirlineByCode(code));
     }
 
     private void validateResult(FlightSearchResult result, String flightCode, float totalPrice) {

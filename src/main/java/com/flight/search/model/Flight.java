@@ -9,11 +9,13 @@ import com.flight.search.utils.DateUtils;
 public class Flight {
 
     private Route route;
+    private Airline airline;
     private String flightCode;
     private float basePrice;
 
-    public Flight(Route route, String flightCode, float basePrice) {
+    public Flight(Route route, Airline airline, String flightCode, float basePrice) {
         this.route = route;
+        this.airline = airline;
         this.flightCode = flightCode;
         this.basePrice = basePrice;
     }
@@ -24,6 +26,18 @@ public class Flight {
 
     public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public Airline getAirline() {
+        return airline;
+    }
+
+    public float getAirlineInfantPrice() {
+        return airline == null ? null : airline.getInfantPrice();
+    }
+
+    public void setAirline(Airline airline) {
+        this.airline = airline;
     }
 
     public Airport getOrigin() {
