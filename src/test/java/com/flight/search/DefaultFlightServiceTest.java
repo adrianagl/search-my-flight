@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.flight.search.model.Route;
-import com.flight.search.repository.AirlineRepository;
 import com.flight.search.repository.AirportRepository;
 import com.flight.search.repository.FlightRepository;
 import com.flight.search.service.DefaultFlightService;
@@ -33,7 +32,6 @@ public class DefaultFlightServiceTest
 
     private FlightRepository flightRepository = mock(FlightRepository.class);
     private AirportRepository airportRepository = mock(AirportRepository.class);
-    private AirlineRepository airlineRepository = mock(AirlineRepository.class);
 
     private DefaultFlightService service = new DefaultFlightService();
 
@@ -43,7 +41,6 @@ public class DefaultFlightServiceTest
 
         service.setFlightRepository(flightRepository);
         service.setAirportRepository(airportRepository);
-        service.setAirlineRepository(airlineRepository);
     }
 
     @Test(expected = IllegalArgumentException.class)

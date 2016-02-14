@@ -9,7 +9,6 @@ import java.util.List;
 import com.flight.search.model.Airport;
 import com.flight.search.model.Flight;
 import com.flight.search.model.Route;
-import com.flight.search.repository.AirlineRepository;
 import com.flight.search.repository.AirportRepository;
 import com.flight.search.repository.FlightRepository;
 import com.flight.search.view.FlightSearchCriteria;
@@ -19,7 +18,6 @@ public class DefaultFlightService {
 
     private FlightRepository flightRepository;
     private AirportRepository airportRepository;
-    private AirlineRepository airlineRepository;
 
     public List<FlightSearchResult> search(FlightSearchCriteria criteria) {
         criteria.validate();
@@ -44,7 +42,6 @@ public class DefaultFlightService {
         float infantPrice = flight.getAirlineInfantPrice();
         LocalDate searchDate = criteria.getDate();
 
-        float basePrice = flight.getBasePrice();
         float priceWithDateDiscount = flight.getPriceWithDateDiscount(searchDate);
 
         float total = 0;
@@ -57,8 +54,6 @@ public class DefaultFlightService {
 
         //Infants
         total += infants * infantPrice;
-
-
 
         return roundPrice(total);
     }
@@ -89,9 +84,5 @@ public class DefaultFlightService {
 
     public void setAirportRepository(AirportRepository airportRepository) {
         this.airportRepository = airportRepository;
-    }
-
-    public void setAirlineRepository(AirlineRepository airlineRepository) {
-        this.airlineRepository = airlineRepository;
     }
 }
