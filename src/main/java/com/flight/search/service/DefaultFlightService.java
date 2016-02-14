@@ -1,11 +1,9 @@
 package com.flight.search.service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.flight.search.calculator.PriceCalculator;
 import com.flight.search.model.Airport;
 import com.flight.search.model.Flight;
 import com.flight.search.model.Route;
@@ -27,41 +25,12 @@ public class DefaultFlightService {
 
         List<Flight> flights = flightRepository.findByRoute(route);
         for(Flight flight : flights) {
-            float totalPrice = calculateTotalPrice(flight, criteria);
+            float totalPrice = PriceCalculator.calculateTotalPrice(flight, criteria);
             FlightSearchResult result = new FlightSearchResult(flight.getFlightCode(), totalPrice);
             results.add(result);
         }
 
         return results;
-    }
-
-    private float calculateTotalPrice(Flight flight, FlightSearchCriteria criteria) {
-        int adults = criteria.getAdults();
-        int children = criteria.getChildren();
-        int infants = criteria.getInfants();
-        float infantPrice = flight.getAirlineInfantPrice();
-        LocalDate searchDate = criteria.getDate();
-
-        float priceWithDateDiscount = flight.getPriceWithDateDiscount(searchDate);
-
-        float total = 0;
-
-        //Adults
-        total += adults * priceWithDateDiscount;
-
-        //Children
-        total += children * (0.67f * priceWithDateDiscount);
-
-        //Infants
-        total += infants * infantPrice;
-
-        return roundPrice(total);
-    }
-
-    private float roundPrice(float price) {
-        BigDecimal bd = new BigDecimal(String.valueOf(price));
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
-        return bd.floatValue();
     }
 
     private Route getRoute(FlightSearchCriteria criteria) {

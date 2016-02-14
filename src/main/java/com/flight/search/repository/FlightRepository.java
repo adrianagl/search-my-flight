@@ -7,5 +7,5 @@ import com.flight.search.model.Route;
 
 public interface FlightRepository {
 
-    public List<Flight> findByRoute(Route route);
+    List<Flight> findByRoute(Route route);
 }

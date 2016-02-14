@@ -1,9 +1,5 @@
 package com.flight.search.model;
 
-import java.time.LocalDate;
-
-import com.flight.search.utils.DateUtils;
-
 public class Flight {
 
     private Route route;
@@ -60,22 +56,5 @@ public class Flight {
 
     public void setBasePrice(float basePrice) {
         this.basePrice = basePrice;
-    }
-
-    public float getPriceWithDateDiscount(LocalDate searchDate) {
-        LocalDate today = LocalDate.now();
-        long daysUntil = DateUtils.daysBetween(today, searchDate);
-
-        float percent;
-        if(daysUntil > 30) {
-            percent = 0.8f;
-        } else if(30 >= daysUntil && daysUntil >= 16) {
-            percent = 1;
-        } else if(15 >= daysUntil && daysUntil >= 3) {
-            percent = 1.2f;
-        } else {
-            percent = 1.5f;
-        }
-        return basePrice * percent;
     }
 }
