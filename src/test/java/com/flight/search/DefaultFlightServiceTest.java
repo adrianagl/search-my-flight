@@ -27,8 +27,9 @@ import static org.mockito.Mockito.when;
 public class DefaultFlightServiceTest
 {
     private static final LocalDate TODAY = LocalDate.now();
-    private static final LocalDate DATE_IN_30_DAYS = DateUtils.addDays(TODAY, 31);
+    private static final LocalDate DATE_MORE_THAN_30_DAYS = DateUtils.addDays(TODAY, 31);
     private static final LocalDate DATE_IN_15_DAYS = DateUtils.addDays(TODAY, 15);
+    private static final LocalDate DATE_IN_2_DAYS = DateUtils.addDays(TODAY, 2);
 
     private FlightRepository flightRepository = mock(FlightRepository.class);
     private AirportRepository airportRepository = mock(AirportRepository.class);
@@ -67,8 +68,8 @@ public class DefaultFlightServiceTest
     }
 
     @Test
-    public void search30DaysToDeparture1Adult() {
-        FlightSearchCriteria criteria = buildCriteriaAndMockData("AMS", "FRA", DATE_IN_30_DAYS, 1, 0, 0);
+    public void searchMoreThan30DaysToDeparture1Adult() {
+        FlightSearchCriteria criteria = buildCriteriaAndMockData("AMS", "FRA", DATE_MORE_THAN_30_DAYS, 1, 0, 0);
 
         List<FlightSearchResult> result = service.search(criteria);
 
@@ -91,6 +92,20 @@ public class DefaultFlightServiceTest
         assertEquals(2, result.size());
         validateResult(result.get(0), "TK8891", 806);
         validateResult(result.get(1), "LH1085", 481.19f);
+
+        verify(airportRepository, times(2)).findByCode(anyString());
+        verify(flightRepository).findByRoute(any(Route.class));
+    }
+
+    @Test
+    public void search2DaysToDeparture1Adult2Children() {
+        FlightSearchCriteria criteria = buildCriteriaAndMockData("BCN", "MAD", DATE_IN_2_DAYS, 1, 2, 0);
+
+        List<FlightSearchResult> result = service.search(criteria);
+
+        assertEquals(2, result.size());
+        validateResult(result.get(0), "IB2171", 909.09f);
+        validateResult(result.get(1), "LH5496", 1028.43f);
 
         verify(airportRepository, times(2)).findByCode(anyString());
         verify(flightRepository).findByRoute(any(Route.class));
