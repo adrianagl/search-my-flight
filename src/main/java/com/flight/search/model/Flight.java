@@ -1,7 +1,5 @@
 package com.flight.search.model;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import com.flight.search.utils.DateUtils;
@@ -78,9 +76,6 @@ public class Flight {
         } else {
             percent = 1.5f;
         }
-        float discountPrice = basePrice * percent;
-        BigDecimal bd = new BigDecimal(discountPrice);
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
-        return bd.floatValue();
+        return basePrice * percent;
     }
 }

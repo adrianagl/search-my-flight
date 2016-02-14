@@ -59,7 +59,7 @@ public class DefaultFlightService {
     }
 
     private float roundPrice(float price) {
-        BigDecimal bd = new BigDecimal(price);
+        BigDecimal bd = new BigDecimal(String.valueOf(price));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.floatValue();
     }

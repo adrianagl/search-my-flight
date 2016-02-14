@@ -44,9 +44,19 @@ public class DefaultFlightServiceTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void searchWhenAirportNotFoundThenReturnException() {
+    public void searchWhenOriginAirportNotFoundThenReturnException() {
         FlightSearchCriteria criteria = new FlightSearchCriteria("LLL", "MAD",
                 TODAY, 1, 1, 1);
+
+        service.search(criteria);
+        verify(airportRepository).findByCode("LLL");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void searchWhenDestinationAirportNotFoundThenReturnException() {
+        FlightSearchCriteria criteria = new FlightSearchCriteria("MAD", "LLL",
+                TODAY, 1, 1, 1);
+        when(airportRepository.findByCode("MAD")).thenReturn(TestUtils.getAirportByCode("MAD"));
 
         service.search(criteria);
         verify(airportRepository).findByCode("LLL");
