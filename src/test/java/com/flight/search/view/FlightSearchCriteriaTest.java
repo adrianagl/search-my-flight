@@ -1,4 +1,4 @@
-package com.flight.search;
+package com.flight.search.view;
 
 
 import java.time.LocalDate;
@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.junit.Test;
 
 import com.flight.search.utils.DateUtils;
-import com.flight.search.view.FlightSearchCriteria;
 import static org.junit.Assert.fail;
 
 public class FlightSearchCriteriaTest {

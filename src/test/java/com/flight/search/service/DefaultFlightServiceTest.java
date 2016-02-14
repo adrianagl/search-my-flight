@@ -1,4 +1,4 @@
-package com.flight.search;
+package com.flight.search.service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,7 +9,6 @@ import org.junit.Test;
 import com.flight.search.model.Route;
 import com.flight.search.repository.AirportRepository;
 import com.flight.search.repository.FlightRepository;
-import com.flight.search.service.DefaultFlightService;
 import com.flight.search.utils.DateUtils;
 import com.flight.search.utils.TestUtils;
 import com.flight.search.view.FlightSearchCriteria;
