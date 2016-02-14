@@ -2,5 +2,7 @@
 
 [![Build Status](https://travis-ci.org/adrianagl/search-my-flight.svg?branch=master)](https://travis-ci.org/adrianagl/search-my-flight)
 
+[![codecov.io](https://codecov.io/github/adrianagl/search-my-flight/coverage.svg?branch=master)](https://codecov.io/github/adrianagl/search-my-flight?branch=master)
+
 # search-my-flight
 Basic search flight application
