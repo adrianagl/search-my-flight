@@ -56,18 +56,6 @@ public class DefaultFlightServiceTest
     }
 
     @Test
-    public void searchWhenFlightNotFoundThenReturnEmptyList() {
-        FlightSearchCriteria criteria = buildCriteriaAndMockData("MAD", "MAD", TODAY, 1, 1, 1);
-
-        List<FlightSearchResult> result = service.search(criteria);
-
-        assertTrue(result.isEmpty());
-
-        verify(airportRepository, times(2)).findByCode(anyString());
-        verify(flightRepository).findByRoute(any(Route.class));
-    }
-
-    @Test
     public void searchMoreThan30DaysToDeparture1Adult() {
         FlightSearchCriteria criteria = buildCriteriaAndMockData("AMS", "FRA", DATE_MORE_THAN_30_DAYS, 1, 0, 0);
 
@@ -106,6 +94,18 @@ public class DefaultFlightServiceTest
         assertEquals(2, result.size());
         validateResult(result.get(0), "IB2171", 909.09f);
         validateResult(result.get(1), "LH5496", 1028.43f);
+
+        verify(airportRepository, times(2)).findByCode(anyString());
+        verify(flightRepository).findByRoute(any(Route.class));
+    }
+
+    @Test
+    public void searchWhenFlightNotFoundThenReturnEmptyList() {
+        FlightSearchCriteria criteria = buildCriteriaAndMockData("CDG", "FRA", TODAY, 1, 1, 1);
+
+        List<FlightSearchResult> result = service.search(criteria);
+
+        assertTrue(result.isEmpty());
 
         verify(airportRepository, times(2)).findByCode(anyString());
         verify(flightRepository).findByRoute(any(Route.class));
