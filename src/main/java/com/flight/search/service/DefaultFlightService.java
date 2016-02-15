@@ -9,8 +9,8 @@ import com.flight.search.model.Flight;
 import com.flight.search.model.Route;
 import com.flight.search.repository.AirportRepository;
 import com.flight.search.repository.FlightRepository;
-import com.flight.search.view.FlightSearchCriteria;
-import com.flight.search.view.FlightSearchResult;
+import com.flight.search.model.FlightSearchCriteria;
+import com.flight.search.model.FlightSearchResult;
 
 public class DefaultFlightService {
 

@@ -1,4 +1,4 @@
-package com.flight.search.view;
+package com.flight.search.model;
 
 
 import java.time.LocalDate;

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 import com.flight.search.model.Flight;
 import com.flight.search.utils.DateUtils;
-import com.flight.search.view.FlightSearchCriteria;
+import com.flight.search.model.FlightSearchCriteria;
 
 public class PriceCalculator {
 
