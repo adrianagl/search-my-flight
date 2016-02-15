@@ -12,6 +12,8 @@ import com.flight.search.model.Route;
 
 public class TestUtils {
 
+    private static final String COMMA = ",";
+
     private static Map<String, Airport> airports = new HashMap<>();
     private static Map<String, Airline> airlines = new HashMap<>();
     private static Map<Route, List<Flight>> flights = new HashMap<>();
@@ -24,34 +26,38 @@ public class TestUtils {
 
     private static void loadAirports() {
         CsvReader reader = new CsvReader("src/test/resources/airports.csv");
-        List<String[]> lines = reader.run();
+        List<String> lines = reader.run();
 
-        for (String[] line : lines) {
-            airports.put(line[0], new Airport(line[0], line[1]));
+        for (String line : lines) {
+            String[] splitted = line.split(COMMA);
+            airports.put(splitted[0], new Airport(splitted[0], splitted[1]));
         }
     }
 
     private static void loadAirlines() {
         CsvReader reader = new CsvReader("src/test/resources/airlines.csv");
-        List<String[]> lines = reader.run();
+        List<String> lines = reader.run();
 
-        for (String[] line : lines) {
-            airlines.put(line[0], new Airline(line[0], line[1], Float.valueOf(line[2])));
+        for (String line : lines) {
+            String[] splitted = line.split(COMMA);
+            airlines.put(splitted[0], new Airline(splitted[0], splitted[1], Float.valueOf(splitted[2])));
         }
     }
 
     private static void loadFlights() {
         CsvReader csvReader = new CsvReader("src/test/resources/flights.csv");
-        List<String[]> lines = csvReader.run();
+        List<String> lines = csvReader.run();
 
-        for (String[] line : lines) {
-            Route route = new Route(getAirportByCode(line[0]), getAirportByCode(line[1]));
+        for (String line : lines) {
+            String[] splitted = line.split(COMMA);
 
-            String flightCode = line[2];
+            Route route = new Route(getAirportByCode(splitted[0]), getAirportByCode(splitted[1]));
+
+            String flightCode = splitted[2];
             String airlineCode = flightCode.substring(0, 2);
             Airline airline = getAirlineByCode(airlineCode);
 
-            Flight newFlight = new Flight(route, airline, flightCode, Float.valueOf(line[3]));
+            Flight newFlight = new Flight(route, airline, flightCode, Float.valueOf(splitted[3]));
 
             if (flights.containsKey(route)) {
                 flights.get(route).add(newFlight);

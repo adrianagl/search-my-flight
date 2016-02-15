@@ -1,11 +1,13 @@
 package com.flight.search.utils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class CsvReader {
 
@@ -17,32 +19,14 @@ public class CsvReader {
         this.csvFilePath = csvFilePath;
     }
 
-    public List<String[]> run() {
-        List<String[]> lines = new ArrayList<>();
-
-        BufferedReader br = null;
-        String line = "";
-        try {
-            br = new BufferedReader(new FileReader(csvFilePath));
-
-            while((line = br.readLine()) != null) {
-                String[] flight = line.split(COMMA);
-                lines.add(flight);
-            }
-        } catch (FileNotFoundException exc) {
-            throw new RuntimeException("The file was not found", exc);
-        } catch (IOException exc) {
-            throw new RuntimeException("An error has occurred while reading the csv file", exc);
-        } finally {
-            if(br != null) {
-                try {
-                    br.close();
-                } catch (IOException exc) {
-                    throw new RuntimeException("An error has occurred while closing the file", exc);
-                }
-            }
+    public List<String> run() {
+        List<String> list = new ArrayList<>();
+        try (Stream<String> stream = Files.lines(Paths.get(csvFilePath))) {
+            list = stream
+                    .collect(toList());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return lines;
+        return list;
     }
 }
