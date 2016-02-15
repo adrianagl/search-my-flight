@@ -5,4 +5,16 @@
 [![codecov.io](https://codecov.io/github/adrianagl/search-my-flight/coverage.svg?branch=master)](https://codecov.io/github/adrianagl/search-my-flight?branch=master)
 
 # search-my-flight
-Basic search flight application
+
+This is a simple flight search application.
+
+Solution has been implemented by only using the Java programming language. No external libraries have been used, except for
+test libraries.
+
+* __Java8__ used for implementation.
+* __Maven__ as automation tool.
+* __Travis CI__ as build service.
+* __Codacy__ for code quality analysis.
+* __Codecov__ for code coverage analysis.
+
+
